@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate,useLocation } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
-  withCredentials: true
+  baseURL: "https://api.satvikraas.com",
+  withCredentials: true,
 });
 
 const EditableProduct = ({ product }) => {
@@ -14,26 +14,24 @@ const EditableProduct = ({ product }) => {
   const [selectedVariant, setSelectedVariant] = useState(
     product?.variants?.[0] || null
   );
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleVariantChange = (variant) => {
     setSelectedVariant(variant);
   };
 
-  
-
   const getAccessToken = () => {
-    return sessionStorage.getItem('accessToken');
+    return sessionStorage.getItem("accessToken");
   };
 
   const editProduct = () => {
     // Navigate to product details page with product data
-    navigate(`/EditProduct`, { 
-      state: { 
+    navigate(`/EditProduct`, {
+      state: {
         product: product,
-        returnPath: location.pathname        
-      }
+        returnPath: location.pathname,
+      },
     });
   };
 
@@ -44,24 +42,20 @@ const EditableProduct = ({ product }) => {
 
   return (
     <div className="product-card">
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
-      
-      <img 
-        src={`data:image/jpeg;base64,${selectedVariant?.mainImage}`} 
-        className="product-image" 
+      {error && <div className="error-message">{error}</div>}
+
+      <img
+        src={`data:image/jpeg;base64,${selectedVariant?.mainImage}`}
+        className="product-image"
         alt={product.name}
       />
-      
+
       <h3>{product.name}</h3>
-            
+
       {selectedVariant && (
         <>
           <p>Price: {selectedVariant.price}</p>
-          
+
           {selectedVariant.discount > 0 && (
             <p>Discount: {selectedVariant.discount}%</p>
           )}
@@ -72,7 +66,7 @@ const EditableProduct = ({ product }) => {
         {product.variants?.map((variant, index) => (
           <button
             key={index}
-            className={variant === selectedVariant ? 'active' : ''}
+            className={variant === selectedVariant ? "active" : ""}
             onClick={() => handleVariantChange(variant)}
           >
             {variant.weight} g
@@ -80,16 +74,15 @@ const EditableProduct = ({ product }) => {
         ))}
       </div>
 
-      <button 
-        onClick={editProduct} 
+      <button
+        onClick={editProduct}
         disabled={loading}
         className="add-cart-button"
       >
-        {loading ? 'Adding...' : 'EDIT'}
+        {loading ? "Adding..." : "EDIT"}
       </button>
     </div>
   );
 };
 
 export default EditableProduct;
-

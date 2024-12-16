@@ -1,14 +1,11 @@
-import EditableProduct from './EditableProduct';
+import EditableProduct from "./EditableProduct";
 
-import './ProductList.css';
+import "./ProductList.css";
 
 const AProductList = ({ products }) => {
-  
-
   return (
     <div className="product-list2">
-      
-      {products.map((product,i) => (
+      {products.map((product, i) => (
         <EditableProduct key={i} product={product} />
       ))}
     </div>

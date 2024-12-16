@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import "./Addproduct.css"
+import React, { useState } from "react";
+import axios from "axios";
+import "./Addproduct.css";
 const AddProduct = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    category: '',
+    name: "",
+    description: "",
+    category: "",
     variants: [
       {
-        weight: '',
-        price: '',
-        stockQuantity: '',
-        discount: '',
+        weight: "",
+        price: "",
+        stockQuantity: "",
+        discount: "",
         mainImage: null,
         subImages: [],
-        offerStartDate: '',
-        offerEndDate: ''
-      }
-    ]
+        offerStartDate: "",
+        offerEndDate: "",
+      },
+    ],
   });
 
   const handleInputChange = (e, index, field) => {
@@ -44,20 +44,20 @@ const AddProduct = () => {
       variants: [
         ...formData.variants,
         {
-          weight: '',
-          price: '',
-          stockQuantity: '',
-          discount: '',
+          weight: "",
+          price: "",
+          stockQuantity: "",
+          discount: "",
           mainImage: null,
           subImages: [],
-          offerStartDate: '',
-          offerEndDate: ''
-        }
-      ]
+          offerStartDate: "",
+          offerEndDate: "",
+        },
+      ],
     });
   };
   const getAccessToken = () => {
-    return sessionStorage.getItem("accessToken")
+    return sessionStorage.getItem("accessToken");
   };
 
   const handleSubmit = async (e) => {
@@ -65,39 +65,53 @@ const AddProduct = () => {
 
     const formDataToSubmit = new FormData();
 
-
     // form adding in objects
-    formDataToSubmit.append('name', formData.name);
-    formDataToSubmit.append('description', formData.description);
-    formDataToSubmit.append('category', formData.category);
+    formDataToSubmit.append("name", formData.name);
+    formDataToSubmit.append("description", formData.description);
+    formDataToSubmit.append("category", formData.category);
 
     formData.variants.forEach((variant, index) => {
       formDataToSubmit.append(`variant[${index}][weight]`, variant.weight);
       formDataToSubmit.append(`variant[${index}][price]`, variant.price);
-      formDataToSubmit.append(`variant[${index}][stockQuantity]`, variant.stockQuantity);
+      formDataToSubmit.append(
+        `variant[${index}][stockQuantity]`,
+        variant.stockQuantity
+      );
       formDataToSubmit.append(`variant[${index}][discount]`, variant.discount);
-      formDataToSubmit.append(`variant[${index}][mainImage]`, variant.mainImage);
+      formDataToSubmit.append(
+        `variant[${index}][mainImage]`,
+        variant.mainImage
+      );
       variant.subImages.forEach((subImage, subIndex) => {
-        formDataToSubmit.append(`variant[${index}][subImages][${subIndex}]`, subImage);
+        formDataToSubmit.append(
+          `variant[${index}][subImages][${subIndex}]`,
+          subImage
+        );
       });
-      formDataToSubmit.append(`variant[${index}][offerStartDate]`, variant.offerStartDate);
-      formDataToSubmit.append(`variant[${index}][offerEndDate]`, variant.offerEndDate);
+      formDataToSubmit.append(
+        `variant[${index}][offerStartDate]`,
+        variant.offerStartDate
+      );
+      formDataToSubmit.append(
+        `variant[${index}][offerEndDate]`,
+        variant.offerEndDate
+      );
     });
-const accessToken = getAccessToken();
+    const accessToken = getAccessToken();
     try {
-
-
-      await axios.post('http://localhost:8080/api/productController/saveProduct', formDataToSubmit, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${accessToken}`
-          
-
+      await axios.post(
+        "https://api.satvikraas.com/api/productController/saveProduct",
+        formDataToSubmit,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-      });
-      alert('Product added successfully');
+      );
+      alert("Product added successfully");
     } catch (error) {
-      console.error('Error adding product:', error);
+      console.error("Error adding product:", error);
     }
   };
 
@@ -118,7 +132,9 @@ const accessToken = getAccessToken();
         <input
           type="text"
           value={formData.category}
-          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, category: e.target.value })
+          }
           required
         />
       </div>
@@ -127,7 +143,9 @@ const accessToken = getAccessToken();
         <label>Description *</label>
         <textarea
           value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, description: e.target.value })
+          }
           required
         />
       </div>
@@ -141,7 +159,7 @@ const accessToken = getAccessToken();
             <input
               type="text"
               value={variant.weight}
-              onChange={(e) => handleInputChange(e, index, 'weight')}
+              onChange={(e) => handleInputChange(e, index, "weight")}
               required
             />
           </div>
@@ -151,7 +169,7 @@ const accessToken = getAccessToken();
             <input
               type="number"
               value={variant.stockQuantity}
-              onChange={(e) => handleInputChange(e, index, 'stockQuantity')}
+              onChange={(e) => handleInputChange(e, index, "stockQuantity")}
               required
             />
           </div>
@@ -161,7 +179,7 @@ const accessToken = getAccessToken();
             <input
               type="number"
               value={variant.price}
-              onChange={(e) => handleInputChange(e, index, 'price')}
+              onChange={(e) => handleInputChange(e, index, "price")}
               required
             />
           </div>
@@ -171,19 +189,27 @@ const accessToken = getAccessToken();
             <input
               type="number"
               value={variant.discount}
-              onChange={(e) => handleInputChange(e, index, 'discount')}
+              onChange={(e) => handleInputChange(e, index, "discount")}
               required
             />
           </div>
 
           <div className="input-group">
             <label>Main Image *</label>
-            <input type="file" onChange={(e) => handleMainImageChange(e, index)} required />
+            <input
+              type="file"
+              onChange={(e) => handleMainImageChange(e, index)}
+              required
+            />
           </div>
 
           <div className="input-group">
             <label>Sub Images</label>
-            <input type="file" multiple onChange={(e) => handleSubImageChange(e, index)} />
+            <input
+              type="file"
+              multiple
+              onChange={(e) => handleSubImageChange(e, index)}
+            />
           </div>
 
           <div className="input-group">
@@ -191,7 +217,7 @@ const accessToken = getAccessToken();
             <input
               type="date"
               value={variant.offerStartDate}
-              onChange={(e) => handleInputChange(e, index, 'offerStartDate')}
+              onChange={(e) => handleInputChange(e, index, "offerStartDate")}
               required
             />
           </div>
@@ -201,7 +227,7 @@ const accessToken = getAccessToken();
             <input
               type="date"
               value={variant.offerEndDate}
-              onChange={(e) => handleInputChange(e, index, 'offerEndDate')}
+              onChange={(e) => handleInputChange(e, index, "offerEndDate")}
               required
             />
           </div>
