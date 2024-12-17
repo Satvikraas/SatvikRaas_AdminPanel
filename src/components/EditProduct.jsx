@@ -143,8 +143,8 @@ const EditProduct = () => {
 
     try {
       const endpoint = existingProduct
-        ? `http://localhost:8080/api/productController/updateProduct/${formData.productId}`
-        : "http://localhost:8080/api/productController/saveProduct";
+        ? `https://api.satvikraas.com/api/productController/updateProduct/${formData.productId}`
+        : "https://api.satvikraas.com/api/productController/saveProduct";
 
       await axios.post(endpoint, formDataToSubmit, {
         headers: {
