@@ -146,12 +146,23 @@ const EditProduct = () => {
         ? `https://api.satvikraas.com/api/productController/updateProduct/${formData.productId}`
         : "https://api.satvikraas.com/api/productController/saveProduct";
 
-      await axios.post(endpoint, formDataToSubmit, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      //   await axios.post(endpoint, formDataToSubmit, {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       Authorization: `Bearer ${accessToken}`,
+      //     },
+      //   });
+
+      await axios.post(
+        `https://api.satvikraas.com/api/productController/updateProduct/${formData.productId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       alert(
         existingProduct
