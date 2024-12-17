@@ -95,7 +95,7 @@ const EditProduct = () => {
   };
 
   const getAccessToken = () => {
-    return localStorage.getItem("accessToken");
+    return sessionStorage.getItem("accessToken");
   };
 
   const handleSubmit = async (e) => {
@@ -155,7 +155,7 @@ const EditProduct = () => {
 
       await axios.post(
         `https://api.satvikraas.com/api/productController/updateProduct/${formData.productId}`,
-        formData,
+        formDataToSubmit,
         {
           headers: {
             "Content-Type": "multipart/form-data",
