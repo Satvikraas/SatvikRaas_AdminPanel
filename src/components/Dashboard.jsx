@@ -50,11 +50,14 @@ const ProductList = ({ products }) => (
 );
 
 const totalSale = (recentOrders) => {
-  let sum = 0;
-  for (let order of recentOrders) {
-    sum += order.totalAmount;
-  }
-  return sum;
+  let totalSales = 0;
+  
+  // Filter only paid orders and sum their total amounts
+  totalSales = recentOrders
+    .filter(order => order.status === 'PAID')
+    .reduce((sum, order) => sum + order.totalAmount, 0);
+  
+  return totalSales;
 };
 const getAccessToken = () => {
   return sessionStorage.getItem("accessToken");
