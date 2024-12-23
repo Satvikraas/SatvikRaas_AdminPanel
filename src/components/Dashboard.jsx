@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import satvikLogo from "../images/satvikLogo.png";
-import { LayoutDashboard } from "lucide-react";
+import { LayoutDashboard , LayoutList ,GalleryHorizontalEnd } from "lucide-react";
 import AdminPP from "./AdminPP.jsx";
 import axios from "axios";
 import Orders from "./Orders.jsx";
@@ -371,7 +371,7 @@ const Dashboard = () => {
              
             />  <p>Dashboard</p>
           </a>
-
+          
         
           <a
             href="#"
@@ -383,7 +383,13 @@ const Dashboard = () => {
               setCurrentView("All-Products");
             }}
           >
-             All Products
+             <GalleryHorizontalEnd 
+              className={`nav-item ${
+                currentView === "All-Products" ? "active" : ""
+              }`}
+             
+            /> 
+         All Products
           </a>
           <a
             href="#"
@@ -392,7 +398,12 @@ const Dashboard = () => {
               e.preventDefault();
               setCurrentView("Orders");
             }}
-          >
+          >   <LayoutList 
+          className={`nav-item ${
+            currentView === "Orders" ? "active" : ""
+          }`}
+         
+        /> 
              Orders
           </a>
           {/* <a href="#" className="nav-item">
