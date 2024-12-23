@@ -364,7 +364,7 @@ const Dashboard = () => {
                 currentView === "dashboard" ? "active" : ""
               }`}
               onClick={() => setCurrentView("dashboard")}
-            />
+            /> Dashboard
           </button>
           <a
             href="#"

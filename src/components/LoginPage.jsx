@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css"; // Make sure to import the CSS
-
+import logo from"../logo.png" 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -37,7 +37,8 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      <h1>Login</h1>
+      <img src={logo} alt="" />
+      <h1>Admin Login</h1>
       {error && <p className="error-message">{error}</p>}
       <input
         type="email"
