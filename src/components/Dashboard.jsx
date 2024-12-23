@@ -16,14 +16,13 @@ const api = axios.create({
 });
 
 const DashboardCard = ({ title, value, percentage, period }) => (
-  <div className="card">
+  <div className="cardd">  
     <h3 className="card-title">{title}</h3>
-    <div className="card-content">
-      <span className="card-value">{value}</span>
-      <span className="percentage-badge">
-        {percentage}% ↑ {period}
-      </span>
-    </div>
+    <h3 className="card-value">{value}</h3>
+   
+  
+  
+    
   </div>
 );
 
@@ -101,26 +100,26 @@ const DashboardView = ({
       <DashboardCard
         title="Product Sold"
         value={totalProductSold}
-        percentage={50}
-        period="this week"
+        // percentage={50}
+        // period="this week"
       />
       <DashboardCard
         title="Total Orders"
         value={recentOrders.length}
-        percentage={80}
-        period="this week"
+        // percentage={80}
+        // period="this week"
       />
       <DashboardCard
         title="Total Customer"
         value={totalCustomers.length}
-        percentage={50}
-        period="this week"
+        // percentage={50}
+        // period="this week"
       />
       <DashboardCard
         title="Total Sales"
         value={totalSale(recentOrders)}
-        percentage={80}
-        period="this week"
+        // percentage={80}
+        // period="this week"
       />
     </div>
 
@@ -362,14 +361,18 @@ const Dashboard = () => {
           <img src={satvikLogo} alt="Satvik Logo" className="logo" />
         </div>
         <nav className="nav-menu">
-          <button className="action-button" aria-label="User Account">
-            <LayoutDashboard
+          <a  onClick={() => setCurrentView("dashboard")}   className={`nav-item ${
+              currentView === "dashboard" ? "active" : ""
+            }`} aria-label="User Account">
+            <LayoutDashboard 
               className={`nav-item ${
                 currentView === "dashboard" ? "active" : ""
               }`}
-              onClick={() => setCurrentView("dashboard")}
-            /> 
-          </button>
+             
+            />  <p>Dashboard</p>
+          </a>
+
+        
           <a
             href="#"
             className={`nav-item ${
@@ -402,7 +405,14 @@ const Dashboard = () => {
       <div className="main-content">
         <div className="header">
           <h1 className="page-title">
-            {currentView === "dashboard" ? "Dashboard" : "All Products"}
+          
+            {currentView === "dashboard"
+    ? "Dashboard"
+    : currentView === "All-Products"
+    ? "All Products"
+    : currentView === "Orders"
+    ? "Orders"
+    : ""}
           </h1>
           <div className="user-section">
             {/* <button className="power-btn">⚙️</button> */}

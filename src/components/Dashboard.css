@@ -2,12 +2,13 @@
 #root{
     max-width: 100vw;
     width: 100vw;
+    overflow: hidden;
   }
   .dashboard-container {
       display: flex;
-      width: 100vw; 
+      width: 98vw; 
       min-height: 100vh;
-      background-color: #eaeaea;
+      background-color: #ffffff; overflow: hidden;
     }
     
     /* Sidebar */
@@ -15,11 +16,11 @@
       width: 250px;
       background-color: white;
       padding: 1rem;
-      border-right: 1px solid #e5e7eb;
+      /* border-right: 1px solid #e5e7eb; */
     }
     
     .logo {
-      height: 40px;
+      height: 70px;
       margin-bottom: 2rem;
     }
     
@@ -38,6 +39,7 @@
       color: #4b5563;
       border-radius: 8px;
       font-size: 0.875rem;
+   
     }
     
     .nav-item:hover {
@@ -45,12 +47,14 @@
     }
     
     .nav-item.active {
-      background-color: #f3f4f6;
+      background-color: #f3f4f6;    border: 1px solid #166534;
     }
     
     /* Main Content */
     .main-content {
       flex: 1;
+    
+
       /* padding: 2rem; */
     }
     
@@ -58,11 +62,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 0;
+
     }
     
     .page-title {
-      font-size: 1.5rem;
+      font-size: 45px;
       font-weight: 600;
     }
     .greenbg{
@@ -101,7 +106,8 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 2rem; 
+      
     }
     .dashboard-cards-1 {
       display: grid;
@@ -110,28 +116,40 @@
       margin-bottom: 2rem;
     }
     
-    .card {
+    .card { border: 1px solid #166534;
       background-color: white;
       padding: 1.5rem;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
-    
+    .cardd{
+      border: 1px solid #166534;
+      background-color: white;
+      /* padding: 1.5rem; */
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+display: flex;
+flex-direction: column;
+align-content: center; justify-content: center;
+    }
     .card-title {
       font-size: 0.875rem;
       color: #6b7280;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.5rem; align-content: center;
     }
     
     .card-content {
       display: flex;
-      align-items: baseline;
+      align-items: center;  align-content: center;
       gap: 0.5rem;
     }
     
     .card-value {
-      font-size: 1.5rem;
+      font-size: 40px;   display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 600;
+      margin: 10px;
     }
     
     .percentage-badge {
@@ -204,5 +222,8 @@
    */
   
    
-  
+  .dashbtn{
+    display: flex;
+    flex-direction: row;
+  }
          

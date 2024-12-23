@@ -161,7 +161,7 @@ function Orders() {
         <div className="orders-section">
           <div className="orders-header">
             <h2 className="orders-title">Orders</h2>
-            <div className="filters">
+            {/* <div className="filters">
               <select
                 disabled
                 className="select-filter"
@@ -183,7 +183,7 @@ function Orders() {
                 <option value="Newest">Newest</option>
                 <option value="Oldest">Oldest</option>
               </select>
-            </div>
+            </div> */}
             <div className="name-dropdown-container">
               <h2 className="dropdown-title">Select Pickup Location</h2>
               <div className="dropdown-wrapper">
