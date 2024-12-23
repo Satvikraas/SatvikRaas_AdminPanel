@@ -65,7 +65,10 @@
       font-size: 1.5rem;
       font-weight: 600;
     }
-    
+    .greenbg{
+      
+      background-color: #2ace697a;
+    }
     .user-section {
       display: flex;
       align-items: center;
@@ -195,10 +198,10 @@
       color: #4b5563;
     }
     
-    .orders-table tbody tr:hover {
+    /* .orders-table tbody tr:hover {
       background-color: #f9fafb;
     }
-  
+   */
   
    
   

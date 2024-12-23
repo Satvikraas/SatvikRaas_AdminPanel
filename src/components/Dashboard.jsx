@@ -160,7 +160,11 @@ const DashboardView = ({
           {!isLoading && (
             <tbody>
               {recentOrders.map((order, index) => (
-                <tr key={index}>
+
+<tr 
+key={index}
+className={order.status !== "CREATED" ? "greenbg" : ""}
+        >
                   <td>{order.razorpayOrderId}</td>
                   <td>{order.userName}</td>
                   <td>{order.createdAt}</td>

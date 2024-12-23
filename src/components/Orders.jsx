@@ -236,7 +236,10 @@ function Orders() {
               ) : (
                 <tbody>
                   {orders.map((order, index) => (
-                    <tr key={index}>
+                  <tr 
+                  key={index}
+                  className={order.status !== "CREATED" ? "greenbg" : ""}
+                          >
                       <td>{order.razorpayOrderId}</td>
                       <td>{order.userName}</td>
                       <td>{new Date(order.createdAt).toLocaleDateString()}</td>
