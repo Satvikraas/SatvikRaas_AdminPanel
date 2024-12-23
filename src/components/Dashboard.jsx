@@ -376,7 +376,7 @@ const Dashboard = () => {
               setCurrentView("All-Products");
             }}
           >
-            📦 All Products
+             All Products
           </a>
           <a
             href="#"
@@ -386,11 +386,11 @@ const Dashboard = () => {
               setCurrentView("Orders");
             }}
           >
-            📝 Orders
+             Orders
           </a>
-          <a href="#" className="nav-item">
-            📄 Draft
-          </a>
+          {/* <a href="#" className="nav-item">
+             Draft
+          </a> */}
         </nav>
       </div>
 
@@ -401,11 +401,11 @@ const Dashboard = () => {
             {currentView === "dashboard" ? "Dashboard" : "All Products"}
           </h1>
           <div className="user-section">
-            <button className="power-btn">⚙️</button>
+            {/* <button className="power-btn">⚙️</button> */}
             <div className="user-info">
-              <div className="avatar">
+              {/* <div className="avatar">
                 <img src={satvikLogo} alt="Satvik Logo" className="logo" />
-              </div>
+              </div> */}
               <span>{profileName}</span>
               <br></br>
               <span>({profileEmail})</span>
