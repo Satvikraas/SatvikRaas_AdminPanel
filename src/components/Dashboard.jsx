@@ -27,30 +27,6 @@ const DashboardCard = ({ title, value, percentage, period }) => (
   </div>
 );
 
-const [isFirstOrder, setIsFirstOrder] = useState(false);
-const checkFirstOrder = async () => {
-  try {
-    const token = getAccessToken(); // Assuming token is stored in localStorage
-    const response = await api.get('/api/user/isFirstOrder', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    console.log(response)
-    setIsFirstOrder(response.data);
-  } catch (error) {
-    console.error('Error checking first order:', error);
-  } finally {
-    setLoading(false);
-    }
-  }; const calculateDiscount = () => {
-  if (isFirstOrder) {
-    return (subtotal * 0.1); // 10% discount
-  }
-  return 0;
-};
-
-const discount = calculateDiscount();
 const ProductList = ({ products }) => (
   <div className="products-section">
     <h2 className="section-title">All Products</h2>
