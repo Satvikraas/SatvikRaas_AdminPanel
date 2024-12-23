@@ -14,7 +14,7 @@ const api = axios.create({
 
 const AdminPP = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [btnName, setBtnName] = useState("ADD");
+  const [btnName, setBtnName] = useState("Add Product");
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -58,7 +58,7 @@ const AdminPP = () => {
 
   const handlemodelopen = () => {
     if (isModalOpen) {
-      setBtnName("ADD");
+      setBtnName("Add Product");
     } else setBtnName("Close");
     setModalOpen(!isModalOpen);
   };
@@ -66,11 +66,25 @@ const AdminPP = () => {
   return (
     <div className="app">
       <div>
-        <button onClick={handlemodelopen}>{btnName}</button>
+        <button className="addbtn" onClick={handlemodelopen}>{btnName}</button>
         {isModalOpen && <AddProduct />}
         {/* {isModalOpen && <EditProduct />} */}
       </div>
-      {isLoading && <div>Loading..........</div>}
+      {isLoading && (
+  <div className="loading-cards">
+    {Array.from({ length: 8 }).map((_, index) => (
+      <div key={index} className="loading-card">
+        <div className="skeleton-image"></div>
+        <div className="skeleton-text"></div>
+        <div className="skeleton-text"></div>
+        <div className="skeleton-button"></div>
+      </div>
+    ))}
+  </div>
+)}
+
+   
+
       {!isModalOpen && !isLoading && <AProductList products={products} />}
     </div>
   );
