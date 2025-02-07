@@ -8,8 +8,8 @@ import Orders from "./Orders.jsx";
 import { useNavigate } from "react-router-dom";
 
 const api = axios.create({
-  // baseURL: "https://api.satvikraas.com",
-  baseURL: "http://localhost:8080",
+  baseURL: "https://api.satvikraas.com",
+ 
   withCredentials: true,
   validateStatus: (status) => {
     return (status >= 200 && status < 300) || status === 302;
