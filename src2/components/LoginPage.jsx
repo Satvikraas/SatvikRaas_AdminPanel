@@ -3,18 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css"; // Make sure to import the CSS
 import logo from"../logo.png" 
-
-
-const api = axios.create({
-  // baseURL: "https://api.satvikraas.com",
-  baseURL: "http://localhost:8080",
-  withCredentials: true,
-  validateStatus: (status) => {
-    return (status >= 200 && status < 300) || status === 302;
-  },
-});
-
-
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -23,10 +11,8 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await api.post(
-        // "https://api.satvikraas.com/api/auth/login",
-        "/api/auth/adminlogin",
-       
+      const response = await axios.post(
+        "https://api.satvikraas.com/api/auth/login",
         null,
         {
           params: {

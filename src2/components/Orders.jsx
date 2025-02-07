@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import OrderDetailsPopup from "./OrderDetailsPopup";
 import "./Orders.css";
-import "./logistics-animations.css";
 
 const api = axios.create({
-  // baseURL: "https://api.satvikraas.com",
-  baseURL: "http://localhost:8080",
+  baseURL: "https://api.satvikraas.com",
   withCredentials: true,
   validateStatus: (status) => {
     return (status >= 200 && status < 300) || status === 302;
@@ -16,37 +14,9 @@ const api = axios.create({
 function Orders() {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const logisticsData = {
-    "Delhivery One": ["SATVIK RASS", "Rohan Garima", "RA BREWING VENTURE LLP"],
-    ShipRocket: ["Primary - RA BREWING VENTURE LLP", "Home - ROHAN GARIMA"],
-  };
-
-  const [selectedLogistics, setSelectedLogistics] = useState("Delhivery One");
+  const [pickupLocations] = useState(["SATVIK RASS", "Rohan Garima"]);
   const [selectedPickupLocation, setSelectedPickupLocation] =
     useState("SATVIK RASS");
-
-  const [shakeAnimation, setShakeAnimation] = useState(false);
-  const [animateFlip, setAnimateFlip] = useState(false);
-
-  const handleLogisticsChange = (e) => {
-    const newLogistics = e.target.value;
-    setSelectedLogistics(newLogistics);
-    setSelectedPickupLocation(logisticsData[newLogistics][0]);// Reset pickup location when logistics changes
-
-    // Trigger shake animation
-    setShakeAnimation(true);
-    setTimeout(() => setShakeAnimation(false), 500); // Remove the animation class after the duration
-
-    // Trigger flip animation
-    setAnimateFlip(true);
-    setTimeout(() => setAnimateFlip(false), 500); // Remove the animation class after the duration
-  };
-
-  const handlePickupLocationChange = (e) => {
-    setSelectedPickupLocation(e.target.value);
-  };
-
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [statusFilter, setStatusFilter] = useState("All Status");
   const [dateFilter, setDateFilter] = useState("");
@@ -87,6 +57,13 @@ function Orders() {
             );
         }
 
+        // Apply date filter
+        // if (dateFilter === 'Newest') {
+        //   filteredOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // } else if (dateFilter === 'Oldest') {
+        //   filteredOrders.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        // }
+
         setOrders(filteredOrders);
       } else {
         setOrders([]);
@@ -106,7 +83,7 @@ function Orders() {
   const updateOrderStatus = (razorpayOrderId) => {
     const updatedOrders = orders.map((order) =>
       order.razorpayOrderId === razorpayOrderId
-        ? { ...order, status: "FORWORDED TO LOGISTICS" }
+        ? { ...order, status: "FORWARDED" }
         : order
     );
     setOrders(updatedOrders);
@@ -121,42 +98,16 @@ function Orders() {
         return false;
       }
 
-      if(selectedLogistics==="Delhivery One"){
-
-        const response = await api.post(`/api/admin/createdelhiveryorder`, null, {
-          params: {
-            razorpayOrderId: razorpayOrderId,
-            pickupLocation: selectedPickupLocation,
-          },
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        alert("Forward order has been created for Delhivery One")
-
-      }
-      else {
-
-        console.log("in shiprocket")
-       
-
-        const response = await api.post(`/api/admin/shiprocketorder`, null, {
-          params: {
-            razorpayOrderId: razorpayOrderId,
-            pickupLocation: selectedPickupLocation,
-          },
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        });
-        alert("Forward order has been created for shiprocket")
-
-      }
-
-      
+      const response = await api.post(`/api/admin/createdelhiveryorder`, null, {
+        params: {
+          razorpayOrderId: razorpayOrderId,
+          pickupLocation: selectedPickupLocation,
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       return true;
     } catch (error) {
@@ -177,65 +128,85 @@ function Orders() {
     fetchAllOrders();
   };
 
+  // Add this function inside the Orders component
+  // const handleStatusFilter = (e) => {
+  //   const selectedStatus = e.target.value;
+  //   console.log(selectedStatus)
+
+  //   // Set the status filter
+  //   setStatusFilter(selectedStatus);
+
+  //   // Filter the orders based on the selected status
+  //   const filteredOrders = filterOrdersByStatus(selectedStatus);
+
+  //   console.log(filteredOrders)
+
+  //   // Update the orders state with filtered orders
+  //   setOrders(filteredOrders);
+  // };
+
+  // const filterOrdersByStatus = (selectedStatus) => {
+  //   // If no status is selected, return all orders
+  //   if (!selectedStatus) {
+  //     return orders;
+  //   }
+
+  //   // Filter orders based on the selected status
+  //   return orders.filter(order => order.status === selectedStatus);
+  // };
+
   return (
     <>
       <div className={`orders-container ${selectedOrder ? "blurred" : ""}`}>
         <div className="orders-section">
           <div className="orders-header">
             <h2 className="orders-title">Orders</h2>
-
-            <div className="logistics-div">
-              <div
-                className={`name-dropdown-container`}
+            {/* <div className="filters">
+              <select
+                disabled
+                className="select-filter"
+                value={statusFilter}
+                onChange={handleStatusFilterChange}
               >
-                <h2 className="dropdown-title">Select Logistics</h2>
-                <div className="dropdown-wrapper">
-                  <select
-                    value={selectedLogistics}
-                    onChange={handleLogisticsChange}
-                    className={`name-select ${
-                      shakeAnimation ? "shake-animation" : ""
-                    }`}
-                  >
-                    <option value="" disabled>
-                      Choose a logistics provider
-                    </option>
-                    {Object.keys(logisticsData).map((logistic, index) => (
-                      <option key={index} value={logistic}>
-                        {logistic}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {selectedLogistics && (
-                <div
-                  className={`name-dropdown-container ${
-                    animateFlip ? "flip-animation" : "" 
-                  }`}
+                <option value="">All Status</option>
+                <option value="CREATED">CREATED</option>
+                <option value="PENDING">PAID</option>
+                <option value="COMPLETED">Forwarded</option>
+              </select>
+              <select
+                disabled
+                className="select-filter"
+                value={dateFilter}
+                onChange={handleDateFilterChange}
+              >
+                <option value="">All Dates</option>
+                <option value="Newest">Newest</option>
+                <option value="Oldest">Oldest</option>
+              </select>
+            </div> */}
+            <div className="name-dropdown-container">
+              <h2 className="dropdown-title">Select Pickup Location</h2>
+              <div className="dropdown-wrapper">
+                <select
+                  value={selectedPickupLocation}
+                  onChange={handleNameChange}
+                  className="name-select"
                 >
-                  <h2 className="dropdown-title">Select Pickup Location</h2>
-                  <div className="dropdown-wrapper">
-                    <select
-                      value={selectedPickupLocation}
-                      onChange={handlePickupLocationChange}
-                      className="name-select"
-                    >
-                      <option value="" disabled>
-                        Choose a pickup location
-                      </option>
-                      {logisticsData[selectedLogistics].map(
-                        (location, index) => (
-                          <option key={index} value={location}>
-                            {location}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
-                </div>
-              )}
+                  <option value="" disabled>
+                    Choose a location
+                  </option>
+                  {pickupLocations.map((pickupLocation, index) => (
+                    <option key={index} value={pickupLocation}>
+                      {pickupLocation}
+                    </option>
+                  ))}
+                </select>
+                {selectedPickupLocation && (
+                  <p className="selected-name">
+                    Pickup Location: {selectedPickupLocation}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -250,7 +221,6 @@ function Orders() {
                   <th>Total Amount</th>
                   <th>Total Weight</th>
                   <th>Status</th>
-                  <th>Type</th>
                   <th>View</th>
                   <th>Action</th>
                 </tr>
@@ -266,10 +236,10 @@ function Orders() {
               ) : (
                 <tbody>
                   {orders.map((order, index) => (
-                    <tr
-                      key={index}
-                      className={order.status == "PAID" || order.status == "COD" || order.status == "FORWORDED TO LOGISTICS"? "greenbg" : ""}
-                    >
+                  <tr 
+                  key={index}
+                  className={order.status !== "CREATED" ? "greenbg" : ""}
+                          >
                       <td>{order.razorpayOrderId}</td>
                       <td>{order.userName}</td>
                       <td>{new Date(order.createdAt).toLocaleDateString()}</td>
@@ -279,7 +249,6 @@ function Orders() {
                       <td>{order.totalAmount.toFixed(2)} RS</td>
                       <td>{order.totalWeight} kg</td>
                       <td>{order.status}</td>
-                      <th>{order.type}</th>
                       <td>
                         <button
                           onClick={() => setSelectedOrder(order)}
@@ -298,9 +267,9 @@ function Orders() {
                               updateOrderStatus(order.razorpayOrderId);
                             }
                           }}
-                          disabled={order.status !== "PAID" || order.status !== "COD"}
+                          disabled={order.status !== "PAID"}
                           className={`forward-order-btn ${
-                            order.status !== "PAID" && order.status !== "COD"  ? "disabled" : ""
+                            order.status !== "PAID" ? "disabled" : ""
                           }`}
                         >
                           Make Forward Order

@@ -1,0 +1,100 @@
+/* Base styles */
+.name-dropdown-container {
+    max-width: 300px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    transition: all 0.5s ease;
+  }
+  
+  /* Animation: Slide In */
+  .slide-in {
+    animation: slideIn 0.5s ease-in-out;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Animation: Fade In */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  /* Animation: Scale Up */
+  .scale-up {
+    animation: scaleUp 0.5s ease-in-out;
+  }
+  
+  @keyframes scaleUp {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Animation: Bounce In */
+  .bounce-in {
+    animation: bounceIn 0.6s ease-in-out;
+  }
+  
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Utility classes */
+  .dropdown-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .name-select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #007bff;
+    border-radius: 6px;
+    appearance: none;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  .selected-name {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #166534;
+    text-align: center;
+  }
+  
