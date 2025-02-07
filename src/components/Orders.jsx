@@ -268,7 +268,7 @@ function Orders() {
                   {orders.map((order, index) => (
                     <tr
                       key={index}
-                      className={order.status == "PAID" || order.status == "COD" || order.status == "CREATED"? "greenbg" : ""}
+                      className={order.status == "PAID" || order.status == "COD" || order.status == "FORWARDED"? "greenbg" : ""}
                     >
                       <td>{order.razorpayOrderId}</td>
                       <td>{order.userName}</td>
