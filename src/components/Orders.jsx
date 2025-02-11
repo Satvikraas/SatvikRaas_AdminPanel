@@ -257,11 +257,198 @@ function Orders() {
               </thead>
               {isLoading ? (
                 <tbody>
-                  <tr>
-                    <td colSpan="9" className="loading-cell">
-                      Loading...
-                    </td>
-                  </tr>
+                   <tr  className="skeleton-row">
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                    </tr>
+                    <tr  className="skeleton-row">
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                    </tr>
+                    <tr  className="skeleton-row">
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                    </tr>
+                    <tr  className="skeleton-row">
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                    </tr>
+                    <tr  className="skeleton-row">
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                    </tr>
+                    <tr  className="skeleton-row">
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box1"></div>
+                      </td>
+                    </tr>
                 </tbody>
               ) : (
                 <tbody>

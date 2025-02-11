@@ -1,27 +1,36 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import satvikLogo from "../images/satvikLogo.png";
-import { LayoutDashboard , LayoutList ,GalleryHorizontalEnd } from "lucide-react";
+import {
+  LayoutDashboard,
+  LayoutList,
+  GalleryHorizontalEnd,
+} from "lucide-react";
 import AdminPP from "./AdminPP.jsx";
 import axios from "axios";
 import Orders from "./Orders.jsx";
-import { useNavigate } from "react-router-dom";
 
+import userIcon from "../images/user-3296.png";
 const api = axios.create({
   baseURL: "https://api.satvikraas.com",
- 
+
   withCredentials: true,
   validateStatus: (status) => {
     return (status >= 200 && status < 300) || status === 302;
   },
 });
-
+const Logout = () => {
+  sessionStorage.removeItem("accessToken"); //
+};
 const DashboardCard = ({ title, value, percentage, period }) => (
-  <div className="cardd">  
+  <div className="cardd">
     <h3 className="card-title">{title}</h3>
-    {value === 0 ? <div className="loading">Loading...</div> : <h3 className="card-value">{value}</h3>}
-    
-   
+    {value === 0 ? (
+      <div className="loading">Loading...</div>
+    ) : (
+      <h3 className="card-value">{value}</h3>
+    )}
   </div>
 );
 
@@ -49,15 +58,14 @@ const ProductList = ({ products }) => (
 
 const totalSale = (recentOrders) => {
   let totalSales = 0;
-  
+
   // Filter orders with status PAID or FORWARDED and sum their total amounts
   totalSales = recentOrders
-    .filter(order => order.status === 'PAID' || order.status === 'FORWARDED')
+    .filter((order) => order.status === "PAID" || order.status === "FORWARDED")
     .reduce((sum, order) => sum + order.totalAmount, 0);
-  
-  return totalSales;
-};
 
+  return totalSales;
+};
 
 const getAccessToken = () => {
   return sessionStorage.getItem("accessToken");
@@ -88,6 +96,17 @@ const handleShipment = async (razorpayOrderId) => {
   }
 };
 
+
+const CompleatedOrder = (recentOrders) => {
+  let compleated = 0;
+
+  compleated = recentOrders
+    .filter((order) => order.status === "PAID" || order.status === "FORWARDED")
+    ;
+
+  return compleated;
+};
+
 const DashboardView = ({
   isLoading,
   recentOrders,
@@ -104,7 +123,7 @@ const DashboardView = ({
       />
       <DashboardCard
         title="Completed Order"
-        value={recentOrders.length}
+        value={CompleatedOrder(recentOrders).length}
         // percentage={80}
         // period="this week"
       />
@@ -156,46 +175,76 @@ const DashboardView = ({
           </thead>
           {/* {isLoading && <div>Loading.........</div>} */}
           {!isLoading && (
-           <tbody>
-           {isLoading ? (
-             [...Array(5)].map((_, index) => (
-               <tr key={index} className="skeleton-row">
-                 <td><div className="skeleton-box"></div></td>
-                 <td><div className="skeleton-box"></div></td>
-                 <td><div className="skeleton-box"></div></td>
-                 <td><div className="skeleton-box"></div></td>
-                 <td><div className="skeleton-box"></div></td>
-                 <td><div className="skeleton-box"></div></td>
-                 <td><div className="skeleton-box"></div></td>
-               </tr>
-             ))
-           ) : recentOrders.length > 0 ? (
-             recentOrders.map((order, index) => (
-               <tr key={index} className={order.status !== "CREATED" ? "greenbg" : ""}>
-                 <td>{order.razorpayOrderId}</td>
-                 <td>{order.userName}</td>
-                 <td>{order.createdAt}</td>
-                 <td>{order.address.city}-{order.address.country}</td>
-                 <td>{order.totalAmount}</td>
-                 <td>{order.totalWeight}</td>
-                 <td>{order.status}</td>
-               </tr>
-             ))
-           ) : (
-            [...Array(5)].map((_, index) => (
-              <tr key={index} className="skeleton-row">
-                <td><div className="skeleton-box"></div></td>
-                <td><div className="skeleton-box"></div></td>
-                <td><div className="skeleton-box"></div></td>
-                <td><div className="skeleton-box"></div></td>
-                <td><div className="skeleton-box"></div></td>
-                <td><div className="skeleton-box"></div></td>
-                <td><div className="skeleton-box"></div></td>
-              </tr>
-            ))
-          )}
-         </tbody>
-         
+            <tbody>
+              {isLoading
+                ? [...Array(5)].map((_, index) => (
+                    <tr key={index} className="skeleton-row">
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                    </tr>
+                  ))
+                : recentOrders.length > 0
+                ? recentOrders.map((order, index) => (
+                    <tr
+                      key={index}
+                      className={order.status !== "CREATED" ? "greenbg" : ""}
+                    >
+                      <td>{order.razorpayOrderId}</td>
+                      <td>{order.userName}</td>
+                      <td>{order.createdAt}</td>
+                      <td>
+                        {order.address.city}-{order.address.country}
+                      </td>
+                      <td>{order.totalAmount}</td>
+                      <td>{order.totalWeight}</td>
+                      <td>{order.status}</td>
+                    </tr>
+                  ))
+                : [...Array(5)].map((_, index) => (
+                    <tr key={index} className="skeleton-row">
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                      <td>
+                        <div className="skeleton-box"></div>
+                      </td>
+                    </tr>
+                  ))}
+            </tbody>
           )}
         </table>
       </div>
@@ -218,7 +267,7 @@ const Dashboard = () => {
   const [profileName, setProfileName] = useState("");
   const [profileEmail, setProfileEmail] = useState("");
   const navigate = useNavigate();
-  const [CompletedOrders , serCompleatedOrders] = useState(0)
+  const [CompletedOrders, serCompleatedOrders] = useState(0);
 
   const getAccessToken = () => {
     return sessionStorage.getItem("accessToken");
@@ -373,18 +422,21 @@ const Dashboard = () => {
           <img src={satvikLogo} alt="Satvik Logo" className="logo" />
         </div>
         <nav className="nav-menu">
-          <a  onClick={() => setCurrentView("dashboard")}   className={`nav-item ${
+          <a
+            onClick={() => setCurrentView("dashboard")}
+            className={`nav-item ${
               currentView === "dashboard" ? "active" : ""
-            }`} aria-label="User Account">
-            <LayoutDashboard 
+            }`}
+            aria-label="User Account"
+          >
+            <LayoutDashboard
               className={`nav-item ${
                 currentView === "dashboard" ? "active" : ""
               }`}
-             
-            />  <p>Dashboard</p>
+            />{" "}
+            <p>Dashboard</p>
           </a>
-          
-        
+
           <a
             href="#"
             className={`nav-item ${
@@ -395,13 +447,12 @@ const Dashboard = () => {
               setCurrentView("All-Products");
             }}
           >
-             <GalleryHorizontalEnd 
+            <GalleryHorizontalEnd
               className={`nav-item ${
                 currentView === "All-Products" ? "active" : ""
               }`}
-             
-            /> 
-         All Products
+            />
+            All Products
           </a>
           <a
             href="#"
@@ -410,13 +461,12 @@ const Dashboard = () => {
               e.preventDefault();
               setCurrentView("Orders");
             }}
-          >   <LayoutList 
-          className={`nav-item ${
-            currentView === "Orders" ? "active" : ""
-          }`}
-         
-        /> 
-             Orders
+          >
+            {" "}
+            <LayoutList
+              className={`nav-item ${currentView === "Orders" ? "active" : ""}`}
+            />
+            Orders
           </a>
           {/* <a href="#" className="nav-item">
              Draft
@@ -428,24 +478,28 @@ const Dashboard = () => {
       <div className="main-content">
         <div className="header">
           <h1 className="page-title">
-          
             {currentView === "dashboard"
-    ? "Dashboard"
-    : currentView === "All-Products"
-    ? "All Products"
-    : currentView === "Orders"
-    ? "Orders"
-    : ""}
+              ? "Dashboard"
+              : currentView === "All-Products"
+              ? "All Products"
+              : currentView === "Orders"
+              ? "Orders"
+              : ""}
           </h1>
           <div className="user-section">
-            {/* <button className="power-btn">⚙️</button> */}
+            <img src={userIcon} alt="User Icon" />
             <div className="user-info">
-              {/* <div className="avatar">
-                <img src={satvikLogo} alt="Satvik Logo" className="logo" />
-              </div> */}
               <span>{profileName}</span>
-              <br></br>
-              <span>({profileEmail})</span>
+              <br />
+              {/* <span>({profileEmail})</span> */}
+              <div className="profileDiv">
+                <ul>
+                  <li>Profile</li>
+                  <li onClick={Logout}>
+                    <a href="/">Log-out</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
