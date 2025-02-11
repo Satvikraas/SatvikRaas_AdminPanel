@@ -19,11 +19,9 @@ const api = axios.create({
 const DashboardCard = ({ title, value, percentage, period }) => (
   <div className="cardd">  
     <h3 className="card-title">{title}</h3>
-    <h3 className="card-value">{value}</h3>
-   
-  
-  
+    {value === 0 ? <div className="loading">Loading...</div> : <h3 className="card-value">{value}</h3>}
     
+   
   </div>
 );
 
@@ -105,7 +103,7 @@ const DashboardView = ({
         // period="this week"
       />
       <DashboardCard
-        title="Total Orders"
+        title="Completed Order"
         value={recentOrders.length}
         // percentage={80}
         // period="this week"
@@ -156,36 +154,48 @@ const DashboardView = ({
               {/* <th>ACTION</th> */}
             </tr>
           </thead>
-          {isLoading && <div>Loading.........</div>}
+          {/* {isLoading && <div>Loading.........</div>} */}
           {!isLoading && (
-            <tbody>
-              {recentOrders.map((order, index) => (
-
-<tr 
-key={index}
-className={order.status !== "CREATED" ? "greenbg" : ""}
-        >
-                  <td>{order.razorpayOrderId}</td>
-                  <td>{order.userName}</td>
-                  <td>{order.createdAt}</td>
-                  <td>
-                    {order.address.city}-{order.address.country}
-                  </td>
-                  <td>{order.totalAmount}</td>
-                  <td>{order.totalWeight}</td>
-                  <td>{order.status}</td>
-                  {/* <td>
-                      <button 
-                        onClick={() => setSelectedOrder(order)}
-                        className="view-details-btn"
-                      >
-                        View Details
-                      </button>
-                    </td>
-                */}
-                </tr>
-              ))}
-            </tbody>
+           <tbody>
+           {isLoading ? (
+             [...Array(5)].map((_, index) => (
+               <tr key={index} className="skeleton-row">
+                 <td><div className="skeleton-box"></div></td>
+                 <td><div className="skeleton-box"></div></td>
+                 <td><div className="skeleton-box"></div></td>
+                 <td><div className="skeleton-box"></div></td>
+                 <td><div className="skeleton-box"></div></td>
+                 <td><div className="skeleton-box"></div></td>
+                 <td><div className="skeleton-box"></div></td>
+               </tr>
+             ))
+           ) : recentOrders.length > 0 ? (
+             recentOrders.map((order, index) => (
+               <tr key={index} className={order.status !== "CREATED" ? "greenbg" : ""}>
+                 <td>{order.razorpayOrderId}</td>
+                 <td>{order.userName}</td>
+                 <td>{order.createdAt}</td>
+                 <td>{order.address.city}-{order.address.country}</td>
+                 <td>{order.totalAmount}</td>
+                 <td>{order.totalWeight}</td>
+                 <td>{order.status}</td>
+               </tr>
+             ))
+           ) : (
+            [...Array(5)].map((_, index) => (
+              <tr key={index} className="skeleton-row">
+                <td><div className="skeleton-box"></div></td>
+                <td><div className="skeleton-box"></div></td>
+                <td><div className="skeleton-box"></div></td>
+                <td><div className="skeleton-box"></div></td>
+                <td><div className="skeleton-box"></div></td>
+                <td><div className="skeleton-box"></div></td>
+                <td><div className="skeleton-box"></div></td>
+              </tr>
+            ))
+          )}
+         </tbody>
+         
           )}
         </table>
       </div>
@@ -208,6 +218,7 @@ const Dashboard = () => {
   const [profileName, setProfileName] = useState("");
   const [profileEmail, setProfileEmail] = useState("");
   const navigate = useNavigate();
+  const [CompletedOrders , serCompleatedOrders] = useState(0)
 
   const getAccessToken = () => {
     return sessionStorage.getItem("accessToken");
@@ -230,7 +241,7 @@ const Dashboard = () => {
         },
       });
 
-      console.log(response);
+      // console.log(response);
 
       if (response.data?.data) {
         setRecentOrders(response.data.data);
@@ -261,7 +272,7 @@ const Dashboard = () => {
         },
       });
 
-      console.log(response);
+      // console.log(response);
 
       if (response.data?.data) {
         setTotalCustomers(response.data.data);

@@ -227,3 +227,35 @@ align-content: center; justify-content: center;
     flex-direction: row;
   }
          
+
+
+  /* recent order skewleton  */
+  .skeleton-row .skeleton-box {
+    width: 100px;
+    height: 16px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 4px;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  .no-data {
+    text-align: center;
+    font-weight: bold;
+    color: gray;
+  }
+  
+  .loading-placeholder {
+    text-align: center;
+    font-weight: bold;
+  }
+  
