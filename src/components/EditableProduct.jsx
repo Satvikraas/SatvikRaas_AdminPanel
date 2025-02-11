@@ -76,7 +76,8 @@ const EditableProduct = ({ product }) => {
 
       <button
         onClick={editProduct}
-        disabled={loading}
+        // disabled={loading}
+        disabled
         className="add-cart-button"
       >
         {loading ? "Adding..." : "EDIT"}
