@@ -133,12 +133,13 @@ const DashboardView = ({
         // percentage={50}
         // period="this week"
       />
-      <DashboardCard
-        title="Total Sales"
-        value={totalSale(recentOrders)}
-        // percentage={80}
-        // period="this week"
-      />
+     <DashboardCard 
+  title="Total Sales" 
+  value={(Math.round(totalSale(recentOrders) * 100) / 100).toFixed(2)} 
+  // percentage={80} 
+  // period="this week" 
+/>
+
     </div>
 
     <div className="orders-section">
