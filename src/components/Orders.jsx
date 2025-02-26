@@ -32,6 +32,7 @@ function Orders() {
   const handleLogisticsChange = (e) => {
     const newLogistics = e.target.value;
     setSelectedLogistics(newLogistics);
+    console.log("newLogistics", newLogistics);
     setSelectedPickupLocation(logisticsData[newLogistics][0]);// Reset pickup location when logistics changes
 
     // Trigger shake animation
@@ -116,6 +117,7 @@ function Orders() {
     try {
       const accessToken = getAccessToken();
 
+      console.log("handle started " );
       if (!accessToken) {
         console.error("No access token found");
         return false;
@@ -250,7 +252,7 @@ function Orders() {
                   <th>Total Amount</th>
                   <th>Total Weight</th>
                   <th>Status</th>
-                  <th>Type</th>
+                  <th>Delivery Status</th>
                   <th>View</th>
                   <th>Action</th>
                 </tr>
@@ -466,7 +468,8 @@ function Orders() {
                       <td>{order.totalAmount.toFixed(2)} RS</td>
                       <td>{order.totalWeight} kg</td>
                       <td>{order.status}</td>
-                      <th>{order.type}</th>
+                      <th>{order.deliveryStatus}</th>
+                      {console.log(order.deliveryStatus)}
                       <td>
                         <button
                           onClick={() => setSelectedOrder(order)}
@@ -485,12 +488,12 @@ function Orders() {
                               updateOrderStatus(order.razorpayOrderId);
                             }
                           }}
-                          disabled={order.status !== "PAID" || order.status !== "COD"}
+                          // disabled={order.deliveryStatus === null }
                           className={`forward-order-btn ${
-                            order.status !== "PAID" && order.status !== "COD"  ? "disabled" : ""
+                            order.deliveryStatus == null && (order.status== "PAID"|| order.status == "COD" ) ? "" : "disabled"
                           }`}
                         >
-                          Make Forward Order
+                          Make Delivery Order
                         </button>
                       </td>
                     </tr>
