@@ -19,10 +19,10 @@ function Orders() {
 
   const logisticsData = {
     "Delhivery One": ["SATVIK RASS", "Rohan Garima", "RA BREWING VENTURE LLP"],
-    ShipRocket: ["Primary - RA BREWING VENTURE LLP", "Home - ROHAN GARIMA"],
+    "ShipRocket": ["Primary - RA BREWING VENTURE LLP", "Home - ROHAN GARIMA"],
   };
 
-  const [selectedLogistics, setSelectedLogistics] = useState("Delhivery One");
+  const [selectedLogistics, setSelectedLogistics] = useState("ShipRocket");
   const [selectedPickupLocation, setSelectedPickupLocation] =
     useState("SATVIK RASS");
 
@@ -147,6 +147,7 @@ function Orders() {
         const response = await api.post(`/api/admin/shiprocketorder`, null, {
           params: {
             razorpayOrderId: razorpayOrderId,
+            
             pickupLocation: selectedPickupLocation,
           },
           headers: {

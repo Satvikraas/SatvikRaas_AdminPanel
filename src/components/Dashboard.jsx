@@ -61,7 +61,7 @@ const totalSale = (recentOrders) => {
 
   // Filter orders with status PAID or FORWARDED and sum their total amounts
   totalSales = recentOrders
-    .filter((order) => order.status === "PAID" || order.status === "FORWARDED")
+    .filter((order) => order.status === "PAID" || order.status === "COD" && order.deliveryStatus !== "CANCELED")
     .reduce((sum, order) => sum + order.totalAmount, 0);
 
   return totalSales;
@@ -101,7 +101,7 @@ const CompleatedOrder = (recentOrders) => {
   let compleated = 0;
 
   compleated = recentOrders
-    .filter((order) => order.status === "PAID" || order.status === "FORWARDED")
+    .filter((order) => order.status === "PAID" || order.status === "COD")
     ;
 
   return compleated;
