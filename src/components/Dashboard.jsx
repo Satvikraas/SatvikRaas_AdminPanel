@@ -168,7 +168,7 @@ const DashboardView = ({
               <th>Customer Name</th>
               <th>Order Date</th>
               <th>Location</th>
-              <th>Delivery Amount</th>
+              <th>Total Amount</th>
               <th>Total Weight</th>
               <th>Status</th>
               {/* <th>ACTION</th> */}
