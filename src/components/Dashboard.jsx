@@ -97,14 +97,21 @@ const handleShipment = async (razorpayOrderId) => {
 };
 
 
+// const CompleatedOrder = (recentOrders) => {
+//   let compleated = 0;
+
+//   compleated = recentOrders
+//     .filter((order) => order.status === "PAID" || order.status === "COD")
+//     ;
+
+//   return compleated;
+// };
 const CompleatedOrder = (recentOrders) => {
-  let compleated = 0;
-
-  compleated = recentOrders
-    .filter((order) => order.status === "PAID" || order.status === "COD")
-    ;
-
-  return compleated;
+  return recentOrders.filter(
+    (order) =>
+      order.deliveryStatusUpdates.length > 0 &&
+      order.deliveryStatusUpdates[order.deliveryStatusUpdates.length - 1].currentStatus === "Deliverd"
+  );
 };
 
 const DashboardView = ({
@@ -116,7 +123,7 @@ const DashboardView = ({
   <>
     <div className="dashboard-cards">
       <DashboardCard
-        title="Product Sold"
+        title="Total Order"
         value={totalProductSold}
         // percentage={50}
         // period="this week"
@@ -128,7 +135,7 @@ const DashboardView = ({
         // period="this week"
       />
       <DashboardCard
-        title="Total Customer"
+        title="Product Sold"
         value={totalCustomers.length}
         // percentage={50}
         // period="this week"
@@ -291,10 +298,11 @@ const Dashboard = () => {
         },
       });
 
-      // console.log(response);
+      console.log(response);
 
       if (response.data?.data) {
         setRecentOrders(response.data.data);
+        console.log(response.data.data)
       } else {
         setRecentOrders([]);
       }
