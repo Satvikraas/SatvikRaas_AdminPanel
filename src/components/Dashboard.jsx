@@ -10,11 +10,9 @@ import {
 import AdminPP from "./AdminPP.jsx";
 import axios from "axios";
 import Orders from "./Orders.jsx";
-
 import userIcon from "../images/user-3296.png";
 const api = axios.create({
   baseURL: "https://api.satvikraas.com",
-
   withCredentials: true,
   validateStatus: (status) => {
     return (status >= 200 && status < 300) || status === 302;
@@ -33,7 +31,6 @@ const DashboardCard = ({ title, value, percentage, period }) => (
     )}
   </div>
 );
-
 const ProductList = ({ products }) => (
   <div className="products-section">
     <h2 className="section-title">All Products</h2>
@@ -55,30 +52,28 @@ const ProductList = ({ products }) => (
     </div>
   </div>
 );
-
 const totalSale = (recentOrders) => {
   let totalSales = 0;
-
   // Filter orders with status PAID or FORWARDED and sum their total amounts
   totalSales = recentOrders
-    .filter((order) => order.status === "PAID" || order.status === "COD" && order.deliveryStatus !== "CANCELED")
+    .filter(
+      (order) =>
+        order.status === "PAID" ||
+        (order.status === "COD" && order.deliveryStatus !== "CANCELED")
+    )
     .reduce((sum, order) => sum + order.totalAmount, 0);
-
   return totalSales;
 };
-
 const getAccessToken = () => {
   return sessionStorage.getItem("accessToken");
 };
 const handleShipment = async (razorpayOrderId) => {
   try {
     const accessToken = getAccessToken();
-
     if (!accessToken) {
       console.error("No access token found");
       return;
     }
-
     const response = await api.post(`/api/admin/createdelhiveryorder`, null, {
       params: {
         razorpayOrderId: razorpayOrderId,
@@ -88,32 +83,27 @@ const handleShipment = async (razorpayOrderId) => {
         "Content-Type": "application/json",
       },
     });
-
     console.log(response);
   } catch (error) {
     console.error("Pickup order error:", error);
     // Optional: Add error handling logic
   }
 };
-
-
 // const CompleatedOrder = (recentOrders) => {
 //   let compleated = 0;
-
 //   compleated = recentOrders
 //     .filter((order) => order.status === "PAID" || order.status === "COD")
 //     ;
-
 //   return compleated;
 // };
 const CompleatedOrder = (recentOrders) => {
   return recentOrders.filter(
     (order) =>
       order.deliveryStatusUpdates.length > 0 &&
-      order.deliveryStatusUpdates[order.deliveryStatusUpdates.length - 1].currentStatus === "Deliverd"
+      order.deliveryStatusUpdates[order.deliveryStatusUpdates.length - 1]
+        .currentStatus === "Deliverd"
   );
 };
-
 const DashboardView = ({
   isLoading,
   recentOrders,
@@ -140,15 +130,13 @@ const DashboardView = ({
         // percentage={50}
         // period="this week"
       />
-     <DashboardCard 
-  title="Total Sales" 
-  value={(Math.round(totalSale(recentOrders) * 100) / 100).toFixed(2)} 
-  // percentage={80} 
-  // period="this week" 
-/>
-
+      <DashboardCard
+        title="Total Sales"
+        value={(Math.round(totalSale(recentOrders) * 100) / 100).toFixed(2)}
+        // percentage={80}
+        // period="this week"
+      />
     </div>
-
     <div className="orders-section">
       <div className="orders-header">
         <h2 className="orders-title">Recent Orders</h2>
@@ -166,7 +154,6 @@ const DashboardView = ({
           </select>
         </div>
       </div>
-
       <div className="table-container">
         <table className="orders-table">
           <thead>
@@ -214,7 +201,13 @@ const DashboardView = ({
                 ? recentOrders.map((order, index) => (
                     <tr
                       key={index}
-                      className={order.status !== "CREATED" ? "greenbg" : ""}
+                      className={
+                        order.status === "FAILED"
+                          ? "redbg"
+                          : order.status !== "CREATED"
+                          ? "greenbg"
+                          : ""
+                      }
                     >
                       <td>{order.razorpayOrderId}</td>
                       <td>{order.userName}</td>
@@ -265,7 +258,6 @@ const DashboardView = ({
     )} */}
   </>
 );
-
 const Dashboard = () => {
   const [currentView, setCurrentView] = useState("dashboard");
   const [isLoading, setIsLoading] = useState(false);
@@ -276,33 +268,27 @@ const Dashboard = () => {
   const [profileEmail, setProfileEmail] = useState("");
   const navigate = useNavigate();
   const [CompletedOrders, serCompleatedOrders] = useState(0);
-
   const getAccessToken = () => {
     return sessionStorage.getItem("accessToken");
   };
-
   const fetchAllOrders = async () => {
     try {
       setIsLoading(true);
       const accessToken = getAccessToken();
-
       if (!accessToken) {
         console.error("No access token found");
         navigate("/");
       }
-
       const response = await api.get("/api/admin/getAllOrders", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
       });
-
       console.log(response);
-
       if (response.data?.data) {
         setRecentOrders(response.data.data);
-        console.log(response.data.data)
+        console.log(response.data.data);
       } else {
         setRecentOrders([]);
       }
@@ -317,21 +303,17 @@ const Dashboard = () => {
     try {
       setIsLoading(true);
       const accessToken = getAccessToken();
-
       if (!accessToken) {
         console.error("No access token found");
         return;
       }
-
       const response = await api.get("/api/admin/getAllUsers", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
       });
-
       // console.log(response);
-
       if (response.data?.data) {
         setTotalCustomers(response.data.data);
       } else {
@@ -344,26 +326,21 @@ const Dashboard = () => {
       setIsLoading(false);
     }
   };
-
   const fetchItemSold = async () => {
     try {
       setIsLoading(true);
       const accessToken = getAccessToken();
-
       if (!accessToken) {
         console.error("No access token found");
         return;
       }
-
       const response = await api.get("/api/admin/getTotalItemSold", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
       });
-
       console.log(response);
-
       if (response) {
         setTotalProductSold(response.data);
       } else {
@@ -376,24 +353,20 @@ const Dashboard = () => {
       setIsLoading(false);
     }
   };
-
   const getProfile = async () => {
     try {
       setIsLoading(true);
       const accessToken = getAccessToken();
-
       if (!accessToken) {
         console.error("No access token found");
         return;
       }
-
       const response = await api.get("/api/admin/getprofile", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
       });
-
       if (response) {
         setProfileName(response.data.data.name);
         setProfileEmail(response.data.data.email);
@@ -409,11 +382,9 @@ const Dashboard = () => {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     getProfile();
   }, []);
-
   // Use useEffect to fetch orders when dashboard view is selected
   useEffect(() => {
     if (currentView === "dashboard") {
@@ -422,7 +393,6 @@ const Dashboard = () => {
       fetchItemSold();
     }
   }, [currentView]);
-
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
@@ -445,7 +415,6 @@ const Dashboard = () => {
             />{" "}
             <p>Dashboard</p>
           </a>
-
           <a
             href="#"
             className={`nav-item ${
@@ -482,7 +451,6 @@ const Dashboard = () => {
           </a> */}
         </nav>
       </div>
-
       {/* Main Content */}
       <div className="main-content">
         <div className="header">
@@ -512,7 +480,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
         {isLoading ? (
           <div className="loading">Loading...</div>
         ) : (
@@ -532,5 +499,4 @@ const Dashboard = () => {
     </div>
   );
 };
-
 export default Dashboard;
